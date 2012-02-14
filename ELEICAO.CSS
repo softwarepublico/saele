@@ -1,0 +1,149 @@
+a:link          {text-decoration: none; color: #9f6000; font-family: Verdana,Arial; font-size: 11px; font-weight: normal;}
+a:visited       {text-decoration: none; color: #FF9933; font-family: Verdana,Arial; font-size: 11px; font-weight: normal;}
+a:active        {text-decoration: none; color: #FF9933; font-family: Verdana,Arial; font-size: 11px; font-weight: normal;}
+a:hover         {text-decoration: none; color: #047d7a; font-family: Verdana,Arial; font-size: 11px; font-weight: normal;}
+
+.Centro        {text-align: center;}
+td.CampoRotulo   {font-size: 10pt; font-family: Verdana; font-weight: bold; text-align: right;}
+td.CampoTexto    {font-size: 10pt; font-family: Verdana; font-weight: normal; text-align: left;}
+td.UrnaCabecalho {background-color: #d3d3d3; font-size: 10pt; font-family: Verdana; font-weight: normal; text-align: left;}
+td.Chapa         {background-color: #f5f5f5; font-size: 10pt; font-family: verdana; font-weight: normal; text-align: center;}
+td.NomeChapa     {background-color: #f5f5f5; font-size: 10pt; font-family: verdana; font-weight: bold; text-align: center;}
+td.Navegacao     {font-size: 12pt; font-family: verdana; text-align: center;}
+
+.CampoCedula    {font-size: 2em; background-color: #ffffff;}
+.BotaoUrna      {width: 3em; font-size: 20pt; font-family: Verdana; font-weight: normal;}
+.BotaoBranco    {font-size: 12pt; font-weight: bold; font-family: verdana; background-color: white;}
+.BotaoNulo      {font-size: 12pt; font-weight: bold; font-family: verdana; background-color: gray;}
+.BotaoCorrige   {font-size: 12pt; font-weight: bold; font-family: verdana; background-color: orange;}
+.BotaoEncerra   {font-size: 15pt; font-weight: normal; font-family: verdana; background-color: #30ff30; }
+
+.a2             {font-size: 14px; font-family: Verdana, Arial; font-weight: bold; color: black;}
+.a3             {font-size: 12px; font-family: Verdana, Arial; font-weight: normal; color: black; text-align: center;}
+.obrigatorio { font-family: Verdana, Tahoma, Arial, sans-serif; color: #000000; background-color: #FFFFA0; font-size: 12px; }
+.obBig       { font-family: Verdana, Tahoma, Arial, sans-serif; color: #000000; background-color: #FFFFFF; font-size: 30px; }
+.OpcionalObrig { font-family: Verdana, Tahoma, Arial, sans-serif; color: #000000; background-color: #99cccc; font-size: 12px; }
+.OpcionalObrig2 { font-family: Verdana, Tahoma, Arial, sans-serif; color: #000000; background-color: #00AAcc; font-size: 12px; }
+.ObrigatorioPQ { font-family: Verdana, Tahoma, Arial, sans-serif; color: #000000; background-color: #FFFFE0; font-size: 9px; }
+.normal      { font-family: Verdana, Tahoma, Arial, sans-serif; color: #000000; font-size: 12px; }
+.etapa       { color: #000000; font-size: 10px; font-family: Verdana, Tahoma, Arial, sans-serif, FontName;  width:145px; }
+.campo       { BACKGROUND-COLOR: #ffff66; COLOR: #333300; WIDTH : 100px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; }
+.campo2      { BACKGROUND-COLOR: #6699cc; COLOR: #ffff66; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 11px; }
+.campo3      { BACKGROUND-COLOR: #ffffcc; COLOR: #333300; WIDTH : 100px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; }
+.campo3ex    { BACKGROUND-COLOR: #ffffcc; COLOR: #333300; WIDTH : 180px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; }
+.campo3ex2   { BACKGROUND-COLOR: #ffffcc; COLOR: #333300; WIDTH : 280px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; }
+.campo4      { BACKGROUND-COLOR: #cccccc; COLOR: #333300; WIDTH : 50px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; }
+.campo5      { BACKGROUND-COLOR: #ffffff; COLOR: #333300; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 9px; }
+.botao       { COLOR: #333300; WIDTH : 100px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;   FONT-SIZE: 9px; }
+.confirma    { BACKGROUND-COLOR: #00dd00; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 1em; FONT-WEIGHT: bold; }
+.corrige     { BACKGROUND-COLOR: #ff0000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 1em; FONT-WEIGHT: bold; width:80px;}
+.branco      { BACKGROUND-COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 1em; FONT-WEIGHT: bold; width:80px;}
+.Nulo        { BACKGROUND-COLOR: #cccccc; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 1em; FONT-WEIGHT: bold; width:80px;}
+.votar       { COLOR: white; BACKGROUND-COLOR: #3333ff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; FONT-WEIGHT: bold; }
+.voto        { FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 1em; PADDING: 3pt; }
+.tecla        { FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 2em; PADDING: 1pt; width:50px; height:50px }
+
+.LabelCampo  { font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 11px; color: #000000; font-weight:  bold; } 
+.CampoNormal { font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 11px; color: #000000; }
+.CampoPequeno { font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 9px; color: #000000; }
+.CampoDisabled { font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 11px; color: #000000; BACKGROUND-COLOR: #dedde3;}
+.CampoDisabledPQ { font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 9px; color: #000000; BACKGROUND-COLOR: #dedde3;}
+
+.Eleitores   { FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; PADDING-TOP: 12px; }
+.assinatura  { BORDER-BOTTOM: solid thin black; }
+
+tr.LinhaHR     {background-color: #d3d3d3; font-family:Verdana;}
+tr.LinhaTitulo {background-color: #d3d3d3; font-weight: bold; font-family:Verdana; text-align: center;}
+tr.Linha1      {background-color: white; font-weight: normal; font-family:Verdana;}
+tr.Linha2      {background-color: #f5f5f5; font-weight: normal; font-family:Verdana;}
+
+.Tabela      { BACKGROUND-COLOR: #ffffff; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; }
+.TabelaCat   { BACKGROUND-COLOR: #ffffff; COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 11px; }
+.TabelaMostra{ COLOR: #000000; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 11px; }
+.LinhaNormal { BACKGROUND-COLOR: #ffffff; COLOR: #666699; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 12px; }
+.LinhaTitulo { BACKGROUND-COLOR: #d3d3d3; COLOR: #666699; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 12px; font-weight:  bold; }
+.LinhaSelecionada { BACKGROUND-COLOR: #ffff99; COLOR: #666699; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; }
+.LinhaSelecionadaImpressao { BACKGROUND-COLOR: #ffff99; background-image: url("http://chumbo/Extensao/Images/FundoGrifado.jpg"); COLOR: #004646; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 10px; }
+
+.normal1        {font-family: Verdana; BACKGROUND-COLOR:#71B8FF; font-size: 10px;}
+.normal2        {font-family: Verdana; BACKGROUND-COLOR:#B3D9FF; font-size: 10px;}
+.Titulo         {font-weight: bold; color: #000000; font-family: Verdana,Arial; font-size: 25px;}
+.cabecalho      {color: #000000; font-size:13px; text-align:center; font-family: Verdana, Tahoma; font-weight: bold;}
+
+.molduraExterna { margin-top: 2em; margin-left: 10%; margin-right: 10%; border: thin solid black; font-family: Verdana; padding: 20px; }
+.TermoTitulo    { text-align: center; font-weight: bold; font-size: 12pt; }
+.TermoParagrafo { text-align: justify; text-indent: 4em; }
+.botoes         { margin-top: 2em; text-align: center; }
+
+h1 {
+    text-align: center;
+    font-family: verdana;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+    font-family: verdana;
+    font-weight: bold;
+}
+
+div.SessaoExpirada {
+    margin: 1em 25%;
+    text-align: center;
+    padding: 1em 5%;
+}
+
+div.SessaoExpirada h1 {
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+div.Erro {
+    margin: 1em 25%;
+    text-align: center;
+    padding: 1em 5%;
+}
+
+div.Layer1 {
+    background-color: #ffe9c5;
+    border: 1px solid blue;
+    position: absolute;
+    padding: 0.5em 0;
+}
+
+div.Layer1 h1 {
+    font-family: verdana;
+    font-size: 14pt;
+    font-weight: normal;
+    text-align: center;
+}
+
+div.Layer1 table {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-spacing: 0;
+}
+
+div.Layer1 tr {
+    padding: 0;
+}
+
+div.Layer1 td {
+    padding: 5px;
+}
+
+div.Layer2 {
+    background-color: #d5e5ff;
+    border: 1px solid red;
+    position: absolute;
+    padding: 0.5em 0;
+}
+
+div.Fim {
+    text-align: center;
+    font-size: 24pt;
+    font-weight: bold;
+    font-family: verdana;
+}

@@ -1,0 +1,349 @@
+create schema eleicoes;
+
+-- Table: eleicoes.pessoaeleicao
+
+-- DROP TABLE eleicoes.pessoaeleicao;
+
+CREATE TABLE eleicoes.pessoaeleicao
+(
+  codpessoaeleicao numeric(8) NOT NULL,
+  cpf numeric(11),
+  nomepessoa character varying(120),
+  nrregistrogeral character varying(120),
+  email character varying(120),
+  localtrabalho character varying(120),
+  pessoaautenticada character(1),
+  gerentesistema character(1),
+  solicitante character(1),
+  identificacaousuario character varying(30) NOT NULL,
+  CONSTRAINT pk_pessoaeleicao PRIMARY KEY (codpessoaeleicao),
+  CONSTRAINT identificacaousuario UNIQUE (identificacaousuario),
+  CONSTRAINT gerentesistema CHECK (gerentesistema = 'N'::bpchar OR gerentesistema = 'S'::bpchar),
+  CONSTRAINT pessoaautenticada CHECK (pessoaautenticada = 'N'::bpchar OR pessoaautenticada = 'S'::bpchar),
+  CONSTRAINT solicitante CHECK (solicitante = 'N'::bpchar OR solicitante = 'S'::bpchar)
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.participacao
+
+-- DROP TABLE eleicoes.participacao;
+
+CREATE TABLE eleicoes.participacao
+(
+  codparticipacao numeric(2) NOT NULL,
+  descricaoparticipacao character varying(60) NOT NULL,
+  indvalidocandidato character(1),
+  CONSTRAINT "participacao$participac_5885291302" PRIMARY KEY (codparticipacao)
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.tiposituacaoconcurso
+
+-- DROP TABLE eleicoes.tiposituacaoconcurso;
+
+CREATE TABLE eleicoes.tiposituacaoconcurso
+(
+  descricaosituacaoconcurso character varying(20),
+  situacaoconcurso numeric(1) NOT NULL,
+  CONSTRAINT pk_tiposituacao PRIMARY KEY (situacaoconcurso)
+)
+WITH (OIDS=FALSE);
+
+insert into eleicoes.tiposituacaoconcurso
+ values ('Criado', 0);
+insert into eleicoes.tiposituacaoconcurso
+ values ('Carregado', 1);
+insert into eleicoes.tiposituacaoconcurso
+ values ('Homologado', 2);
+insert into eleicoes.tiposituacaoconcurso
+ values ('Apurado', 3);
+insert into eleicoes.tiposituacaoconcurso
+ values ('Arquivado', 4);
+
+-- Table: eleicoes.concursoeleitoral
+
+-- DROP TABLE eleicoes.concursoeleitoral;
+
+CREATE TABLE eleicoes.concursoeleitoral
+(
+  codconcurso numeric(4) NOT NULL,
+  descricao character varying(120),
+  datahorainicio timestamp without time zone NOT NULL,
+  datahorafim timestamp without time zone NOT NULL,
+  indbarradoporip character(1) NOT NULL DEFAULT 'N'::bpchar,
+  indhabilitacontagem character(1),
+  modalidadeconcurso character(1),
+  situacaoconcurso numeric(1),
+  CONSTRAINT "concursoeleitoral$concursoel_6205292442" PRIMARY KEY (codconcurso),
+  CONSTRAINT fk_situacaoconcurso FOREIGN KEY (situacaoconcurso)
+      REFERENCES eleicoes.tiposituacaoconcurso (situacaoconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "concursoeleitoral$rule$indbarradoporip" CHECK (indbarradoporip = 'N'::bpchar OR indbarradoporip = 'E'::bpchar OR indbarradoporip = 'S'::bpchar),
+  CONSTRAINT "concursoeleitoral$rule$indhabilitacontagem" CHECK (indhabilitacontagem = 'F'::bpchar OR indhabilitacontagem = 'X'::bpchar OR indhabilitacontagem = 'N'::bpchar OR indhabilitacontagem = 'S'::bpchar)
+)
+WITH (OIDS=FALSE);
+
+-- Index: eleicoes.fki_situacaoconcurso
+
+-- DROP INDEX eleicoes.fki_situacaoconcurso;
+
+CREATE INDEX fki_situacaoconcurso
+  ON eleicoes.concursoeleitoral
+  USING btree
+  (situacaoconcurso);
+
+-- Table: eleicoes.eleicao
+
+-- DROP TABLE eleicoes.eleicao;
+
+CREATE TABLE eleicoes.eleicao
+(
+  codeleicao numeric(4) NOT NULL,
+  codconcurso numeric(4) NOT NULL,
+  descricao character varying(120) NOT NULL,
+  nrpossibilidades numeric(18),
+  votosnulos numeric(8),
+  votosbrancos numeric(8),
+  nrvagas numeric(8),
+  nrdigitoschapa numeric(1),
+  CONSTRAINT "eleicao$eleicao_6685294152" PRIMARY KEY (codeleicao, codconcurso),
+  CONSTRAINT "eleicao$eleicao_1036530726" FOREIGN KEY (codconcurso)
+      REFERENCES eleicoes.concursoeleitoral (codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.chapa
+
+-- DROP TABLE eleicoes.chapa;
+
+CREATE TABLE eleicoes.chapa
+(
+  codchapa numeric(4) NOT NULL,
+  codeleicao numeric(4) NOT NULL,
+  codconcurso numeric(4) NOT NULL,
+  descricao character varying(120) NOT NULL,
+  nrchapa numeric(8),
+  nrvotosrecebidos numeric(6),
+  CONSTRAINT "chapa$chapa_9885305552" PRIMARY KEY (codeleicao, codchapa, codconcurso),
+  CONSTRAINT "chapa$chapa_1340531809" FOREIGN KEY (codeleicao, codconcurso)
+      REFERENCES eleicoes.eleicao (codeleicao, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.candidato
+
+-- DROP TABLE eleicoes.candidato;
+
+CREATE TABLE eleicoes.candidato
+(
+  codchapa numeric(4) NOT NULL,
+  codeleicao numeric(4) NOT NULL,
+  codpessoaeleicao numeric(8) NOT NULL,
+  codconcurso numeric(4) NOT NULL,
+  codparticipacao numeric(2) NOT NULL,
+  CONSTRAINT "candidato$candidato_10205306692" PRIMARY KEY (codchapa, codeleicao, codpessoaeleicao, codconcurso, codparticipacao),
+  CONSTRAINT "candidato$candidato_1356531866" FOREIGN KEY (codparticipacao)
+      REFERENCES eleicoes.participacao (codparticipacao) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "candidato$candidato_1372531923" FOREIGN KEY (codeleicao, codchapa, codconcurso)
+      REFERENCES eleicoes.chapa (codeleicao, codchapa, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_candidato FOREIGN KEY (codpessoaeleicao)
+      REFERENCES eleicoes.pessoaeleicao (codpessoaeleicao) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Index: eleicoes.fki_candidato
+
+-- DROP INDEX eleicoes.fki_candidato;
+
+CREATE INDEX fki_candidato
+  ON eleicoes.candidato
+  USING btree
+  (codpessoaeleicao);
+
+-- Table: eleicoes.comissaoeleitoral
+
+-- DROP TABLE eleicoes.comissaoeleitoral;
+
+CREATE TABLE eleicoes.comissaoeleitoral
+(
+  codpessoaeleicao numeric(8) NOT NULL,
+  codeleicao numeric(4) NOT NULL,
+  codconcurso numeric(4) NOT NULL,
+  gerente character(1),
+  CONSTRAINT comissaoeleitoral_pk PRIMARY KEY (codpessoaeleicao, codeleicao, codconcurso),
+  CONSTRAINT "comissaoeleitoral$comissaoel_1084530897" FOREIGN KEY (codeleicao, codconcurso)
+      REFERENCES eleicoes.eleicao (codeleicao, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_comissaoeleitoral FOREIGN KEY (codpessoaeleicao)
+      REFERENCES eleicoes.pessoaeleicao (codpessoaeleicao) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.dominioip
+
+-- DROP TABLE eleicoes.dominioip;
+
+CREATE TABLE eleicoes.dominioip
+(
+  codconcurso numeric(4) NOT NULL,
+  nrseqdominio numeric(4) NOT NULL,
+  prefixoip character varying(15) NOT NULL,
+  indativa character(1) NOT NULL,
+  codeleicao numeric(4) NOT NULL,
+  descricao character varying(120) NOT NULL,
+  CONSTRAINT pk_dominioip PRIMARY KEY (codconcurso, codeleicao, nrseqdominio),
+  CONSTRAINT fk_dominioip FOREIGN KEY (codconcurso, codeleicao)
+      REFERENCES eleicoes.eleicao (codconcurso, codeleicao) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.eleitor
+
+-- DROP TABLE eleicoes.eleitor;
+
+CREATE TABLE eleicoes.eleitor
+(
+  codpessoaeleicao numeric(8) NOT NULL,
+  codeleicao numeric(4) NOT NULL,
+  codurnaorigem numeric(4),
+  codconcurso numeric(4) NOT NULL,
+  codurnavoto numeric(18),
+  datahoravoto timestamp without time zone,
+  indefetuouvoto character(1),
+  ipvoto character varying(20),
+  usuarioinclusao numeric(6),
+  datainclusao timestamp without time zone,
+  CONSTRAINT "eleitor$eleitor_7965298712" PRIMARY KEY (codpessoaeleicao, codeleicao, codconcurso),
+  CONSTRAINT "eleitor$eleitor_1180531239" FOREIGN KEY (codeleicao, codconcurso)
+      REFERENCES eleicoes.eleicao (codeleicao, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_eleitor FOREIGN KEY (codpessoaeleicao)
+      REFERENCES eleicoes.pessoaeleicao (codpessoaeleicao) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.urnavirtual
+
+-- DROP TABLE eleicoes.urnavirtual;
+
+CREATE TABLE eleicoes.urnavirtual
+(
+  codurna numeric(4) NOT NULL,
+  codeleicao numeric(4) NOT NULL,
+  codconcurso numeric(4) NOT NULL,
+  ip character varying(120) NOT NULL,
+  codpessoaeleicao numeric(8),
+  descricao character varying(120),
+  indativa character(1) NOT NULL,
+  CONSTRAINT "urnavirtual$urnavirtua_7645297572" PRIMARY KEY (codurna, codeleicao, codconcurso),
+  CONSTRAINT "urnavirtual$urnavirtua_1148531125" FOREIGN KEY (codeleicao, codconcurso)
+      REFERENCES eleicoes.eleicao (codeleicao, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.voto
+
+-- DROP TABLE eleicoes.voto;
+
+CREATE TABLE eleicoes.voto
+(
+  codeleicao numeric(4) NOT NULL,
+  codconcurso numeric(4) NOT NULL,
+  numerorandomico numeric(6) NOT NULL,
+  indvotonulo character(1),
+  indvotobranco character(1),
+  codchapa numeric(4),
+  codurna numeric(4),
+  dominio numeric(4),
+  CONSTRAINT "voto$voto_18525336331" PRIMARY KEY (codeleicao, codconcurso, numerorandomico),
+  CONSTRAINT "voto$voto_1436529120" FOREIGN KEY (codeleicao, codchapa, codconcurso)
+      REFERENCES eleicoes.chapa (codeleicao, codchapa, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "voto$voto_1452529177" FOREIGN KEY (codeleicao, codconcurso)
+      REFERENCES eleicoes.eleicao (codeleicao, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "voto$voto_urnavirtual_fk" FOREIGN KEY (codurna, codeleicao, codconcurso)
+      REFERENCES eleicoes.urnavirtual (codurna, codeleicao, codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT voto_dominioip_fk FOREIGN KEY (codconcurso, codeleicao, dominio)
+      REFERENCES eleicoes.dominioip (codconcurso, codeleicao, nrseqdominio) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.logoperacao
+
+-- DROP TABLE eleicoes.logoperacao;
+
+CREATE TABLE eleicoes.logoperacao
+(
+  codconcurso numeric(4) NOT NULL,
+  codeleicao numeric(4),
+  codpessoaeleicao numeric(8),
+  nrseqlogoperacao numeric(8) NOT NULL,
+  dataoperacao timestamp without time zone NOT NULL,
+  ip character(15) NOT NULL,
+  descricao character varying(120) NOT NULL,
+  CONSTRAINT pk_logoperacao PRIMARY KEY (nrseqlogoperacao, codconcurso),
+  CONSTRAINT fk2_logoperacao FOREIGN KEY (codpessoaeleicao)
+      REFERENCES eleicoes.pessoaeleicao (codpessoaeleicao) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.solicitacaoconcurso
+
+-- DROP TABLE eleicoes.solicitacaoconcurso;
+
+CREATE TABLE eleicoes.solicitacaoconcurso
+(
+  nrseqsolicitacaoconcurso numeric(6) NOT NULL,
+  nomeconcurso character varying(120) NOT NULL,
+  datainicioconcurso timestamp without time zone NOT NULL,
+  datafimconcurso timestamp without time zone NOT NULL,
+  nomepessoacontato character varying(72),
+  ramalcontato character(5),
+  emailcontato character varying(50),
+  comissaoeleitoral character varying(255),
+  gerentesconcurso character varying(255),
+  indbarradoporip character(1) NOT NULL,
+  perfileleitores character(1),
+  datasolicitacao timestamp without time zone NOT NULL,
+  usuariosolicitacao numeric(6) NOT NULL,
+  dataatendimento timestamp without time zone,
+  codconcurso numeric(4),
+  codorgaoescopo numeric(5),
+  observacao text,
+  modalidadeconcurso character(1),
+  CONSTRAINT "solicitacaoeleicao$solicitaca_21085345452" PRIMARY KEY (nrseqsolicitacaoconcurso),
+  CONSTRAINT "solicitacaoeleicao$concursosolicitacao_fk" FOREIGN KEY (codconcurso)
+      REFERENCES eleicoes.concursoeleitoral (codconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "solicitacaoeleicao$rule$tipoeleicao" CHECK (indbarradoporip = 'E'::bpchar OR indbarradoporip = 'N'::bpchar OR indbarradoporip = 'S'::bpchar)
+)
+WITH (OIDS=FALSE);
+
+-- Table: eleicoes.eleicaosolicitacao
+
+-- DROP TABLE eleicoes.eleicaosolicitacao;
+
+CREATE TABLE eleicoes.eleicaosolicitacao
+(
+  nrseqsolicitacaoconcurso numeric(6) NOT NULL,
+  nrseqeleicao numeric(6) NOT NULL,
+  descricao character(120) NOT NULL,
+  CONSTRAINT pk_eleicaosolicitacao PRIMARY KEY (nrseqsolicitacaoconcurso, nrseqeleicao),
+  CONSTRAINT fk_eleicaosolicitacao FOREIGN KEY (nrseqsolicitacaoconcurso)
+      REFERENCES eleicoes.solicitacaoconcurso (nrseqsolicitacaoconcurso) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (OIDS=FALSE);
